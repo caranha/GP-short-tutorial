@@ -1,0 +1,156 @@
+/* General */
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,400i,700,700i|Roboto+Mono:400,700,400i");
+body {
+  font-family: "Ubuntu";
+}
+.remark-slide-content {
+  font-size: 22px;
+}
+
+.remark-slide-content h1 { font-size: 2em; }
+.remark-slide-content h2 { font-size: 1.5em; }
+.remark-slide-content h3 { font-size: 1.2em; }
+
+/* Text Decoration */
+.redtext { color: #fa0000; }
+
+/* Code */
+
+code {
+  background: #e7e8e2;
+  border-radius: 5px;
+}
+.compact code {
+  line-height: 70%;
+  font-size: 60%;
+}
+
+.remark-code,
+.remark-inline-code {
+  font-family: "Roboto Mono";
+}
+.remark-inline-code {
+  color: #812815;
+  font-size: 85%;
+}
+
+/* Columns */
+.pull-left {
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  float: right;
+  width: 47%;
+}
+.pull-right ~ p {
+  clear: both;
+}
+
+.cols {
+  display: flex;
+}
+.c10 {
+  flex: 10%;
+}
+.c15 {
+  flex: 15%;
+}
+.c20 {
+  flex: 20%;
+}
+.c25 {
+  flex: 25%;
+}
+.c30 {
+  flex: 30%;
+}
+.c40 {
+  flex: 40%;
+}
+.c50 {
+  flex: 50%;
+}
+.c60 {
+  flex: 60%;
+}
+.c70 {
+  flex: 70%;
+}
+.c75 {
+  flex: 75%;
+}
+.c80 {
+  flex: 80%;
+}
+.c90 {
+  flex: 90%;
+}
+.cols > div:nth-child(1) {
+  x-padding-right: 0.5em;
+}
+.cols > div:nth-last-child(1) {
+  x-padding-left: 0.5em;
+}
+.cols .vcentered {
+  align-self: center;
+}
+
+
+/* Boxes */
+
+.boxlabel {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 3px 5px 4px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-size: 0.75em;
+  left: 10px;
+  top: -15px;
+  position: relative;
+}
+
+.boxyellow {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 0 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 25px;
+  font-size: 0.9em;
+  background-color: #FFECD1;
+  border-color: #F89406;
+}
+
+.boxyellow p, .boxyellow ul {
+  position: relative;
+  top: -20px;
+}
+
+.boxyellow .boxlabel {
+  background-color: #F89406;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+}
+
+/* Footnote */
+
+.footmark {
+  vertical-align: super;
+  text-decoration: underline;
+  font-size: 50%;
+}
+
+.footnote {
+  position: absolute;
+  bottom: 2.5em;
+  font-size: 75%;
+}
