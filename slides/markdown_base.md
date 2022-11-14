@@ -318,31 +318,95 @@ We use the [DEAP](https://deap.readthedocs.io/en/master/) Library to program sim
 
 ![:scale 40%](img/Deap_Logo.png)
 
-Make sure to install the requirements listed in the `code/outline.md`.
 
 ---
 # 2. Implementation of Simple GP
-## GP Operators
+## How to use the DEAP Library
+
+First, we will show how to use the DEAP library to program a Simple GP.
+
+- A Jupyter Notebook contains the necessary code examples.
+
+- You can find the Jupyter Notebook in the file: `code/01_SimpleGP/GP_HowTo.ipynb`
+
+- Don't forget to install the requirements listed in `code/outline.md`
+
+.redtext[Let's take a look at this Jupyter Notebook.]
 
 ---
 # 2. Implementation of Simple GP
-## Tree Generation
+## A Full Example of Simple GP
+
+Next, we show a full example of Simple GP that solves three toy problems:
+
+- **Symbolic Regression**: Given a Real valued `x`, calculate `x + x^2 + x^3 + x^4`
+
+
+- **Fibonacci**: Given an integer `N`, calculate the N-th Fibonacci number.
+
+
+- **Parity**: Given a string of `N` bits, calculate the parity of the string.
+
+The code for this example is in the file: `code/01_SimpleGP/Simple_GP.py`
+
+.redtext[Let's take a look at this code!]
 
 ---
 # 2. Implementation of Simple GP
-## Evolutionary Loop
+## GP Issues: GP does not always succeed!
+
+The Simple GP finds good results for the `symbreg` and `parity` problems.
+However, it could not find a good result for `fibonacci`.
+
+How can we improve the result of fibonacci?
+
+1. **Improve the operator set: Remove sin/cos, add square root.**  
+(The closed form of fibonacci uses square root)
+
+2. **Choose better algorithm parameters.**  
+(EC performance depends on crossover, mutation, etc.)
+
+3. **Add the ability of recursion or loop in the GP.**  
+(Recursion and loop are difficult in Simple GP. A more advanced encoding
+  is necessary)
 
 ---
 # 2. Implementation of Simple GP
-## Symbolic Regression Example
+## GP Issues: Bloat
+
+.cols[
+.c60[
+GP can solve the `symbreg` in 40 generations.
+
+However, if we keep running the evolution, the best tree will tend to
+become larger and larger, without improving the quality of the solution.
+
+This is called .redtext[bloat]. Bloat can cause the GP to become much slower,
+and remove the effectiveness of mutation and crossover.
+
+Reducing bloat is an important research question in GP.
+]
+.c40[
+.center[
+![:scale 60%](img/bloat_tree.png)
+]
+]
+]
 
 ---
-# 2. Implementation of Simple GP
-## Binary Parity Example
+# 2. Implementation of Simple GP (Summary)
 
----
-# 2. Implementation of Simple GP
-## Bloat
+- We can use the DEAP library to implement Simple GP;
+
+- Deap define key functions in the `toolbox` object;
+
+- Code for toy problems: symbolic regression, fibonacci, parity;
+
+- Selection of operators and parameters matter for performance.
+
+- Beware of bloat!
+
+**Next we will see a more interesting application example.**
 
 ---
 # 3. Simple GP and the Pole Balancing Problem

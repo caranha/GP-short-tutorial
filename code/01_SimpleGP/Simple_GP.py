@@ -10,7 +10,7 @@ import pygraphviz as pgv
 
 
 ################################################
-# Tree plotting
+# Function to Plot the tree
 def drawtree(t, filename):
     nodes, edges, labels = gp.graph(t)
     g = pgv.AGraph()
@@ -25,9 +25,9 @@ def drawtree(t, filename):
     g.draw(filename)
 
 ###################################################
-# Defining the problem to solve:
+# Functions for the toy problems:
 
-## Symbolic Regression (one input)
+## Symbolic Regression (one input, one output)
 symbreg_input = [ x/10. for x in range(-10, 10) ]
 def symbreg(x):
     return x**4 + x**3 + x**2 + x
@@ -37,7 +37,7 @@ def eval_symbreg(func):
     return sum(sq_errors) / len(symbreg_input),
 
 
-## Fibonacci (One input)
+## Fibonacci (One input, one output)
 fib_input = [ x for x in range (0, 25) ]
 def fibonacci(x):
     if x == 0 or x == 1:
@@ -49,8 +49,7 @@ def eval_fibonacci(func):
     sq_errors = ((func(n) - fib_output[n])**2 for n in range(0, 25))
     return sum(sq_errors) / len(fib_output),
 
-
-## Parity Function (N inputs)
+## Parity Function (N inputs, one output)
 parity_N = 6
 def bitarray(k):
     return [(k & 2**x) and 1 for x in range(parity_N)]
@@ -67,7 +66,7 @@ def eval_parity(func):
 
 ####################################################
 # Defining GP Operators / Terminals
-## Symbolic Regression Operators
+## Operators for Symbolic Regression (fibonacci, symbreg)
 def operators_symbreg():
     def protectedDiv(left, right):
         try:
@@ -89,7 +88,7 @@ def operators_symbreg():
 
     return pset
 
-## Logical Operators
+## Operators for Binary Logic (Parity)
 def operators_logical():
     pset = gp.PrimitiveSet("MAIN", parity_N, "IN") # Parity_N inputs
     pset.addPrimitive(operator.and_, 2)
@@ -102,46 +101,58 @@ def operators_logical():
 
     return pset
 
-
+##############################################################
 # Setting up DEAP
 
-# GP tree with minimization goal:
-creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
+## Select the problem to solve:
 
-# DEAP toolbox:
-## Change this for the problem you want to solve
-
-fitness_func = eval_symbreg
-# fitness_func = eval_fibonacci
+# fitness_func = eval_symbreg
+fitness_func = eval_fibonacci
 # fitness_func = eval_parity
 
 operator_set = operators_symbreg()
 # operator_set = operators_logical()
 
+
+## Define Generators (Object is PrimitiveTree, Goal is Minimization)
+creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
+
+## DEAP toolbox: (define functions for selection, mutation, crossover, etc)
 toolbox = base.Toolbox()
-toolbox.register("expr", gp.genHalfAndHalf, pset=operator_set, min_=1, max_=2)
-toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
-toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-toolbox.register("compile", gp.compile, pset=operator_set)
+toolbox.register("expr",
+                 gp.genHalfAndHalf, pset=operator_set, min_=1, max_=2)
+toolbox.register("individual",
+                 tools.initIterate, creator.Individual, toolbox.expr)
+toolbox.register("population",
+                 tools.initRepeat, list, toolbox.individual)
+toolbox.register("compile",
+                 gp.compile, pset=operator_set)
 
 def eval(individual):
     return fitness_func(toolbox.compile(expr=individual))
+toolbox.register("evaluate",
+                 eval)
 
-toolbox.register("evaluate", eval)
-toolbox.register("select", tools.selTournament, tournsize=3)
-toolbox.register("mate", gp.cxOnePoint)
-toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
-toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=operator_set)
+toolbox.register("select",
+                 tools.selTournament, tournsize=3)
+toolbox.register("mate",
+                 gp.cxOnePoint)
+toolbox.register("expr_mut",
+                 gp.genFull, min_=0, max_=2)
+toolbox.register("mutate",
+                 gp.mutUniform, expr=toolbox.expr_mut, pset=operator_set)
 
 # Set up tree size limits
-toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
-toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
+toolbox.decorate("mate",
+                 gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
+toolbox.decorate("mutate",
+                 gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
 
 # Running the GP
 def run_GP():
     POP_SIZE = 300
-    GEN_SIZE = 40
+    GEN_SIZE = 40 # 120
     CROSSOVER_RATE = 0.5
     MUTATION_RATE = 0.1
 
@@ -169,6 +180,11 @@ def run_GP():
     print("Fitness: {:.5}".format(hof[0].fitness.values[0]))
 
     drawtree(hof[0], "besttree.png")
+
+    # Fibonacci analysis:
+    # hof_func = gp.compile(hof[0], operator_set)
+    # for i in range(10):
+    #     print("{}, {}".format(fibonacci(i), hof_func(i)))
 
 
     # TODO: Analyze the first generation and last generation separately
