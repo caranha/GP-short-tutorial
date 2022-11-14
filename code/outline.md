@@ -1,8 +1,13 @@
-# Environment
-- Python Version: 3.9.6 (Should work on 3.10, pygame does not install on 3.11 yet)
-- Python libraries: requirements.txt
+# Required Environment:
+The environment below was used for this code:
+
+- Python Version: 3.9.6 (pygame does not install on 3.11 yet)
+- Python libraries: pip install -r requirements.txt
 - Other libraries:
-  - graphviz: graphviz, libgraphviz-dev,
+  - graphviz:
+  ```
+  sudo apt-get install graphviz libgraphviz-dev
+  ```
   - pygame:
   ```
   sudo apt-get install git python3-dev python3-setuptools python3-numpy python3-opengl \
@@ -16,15 +21,27 @@
 ## Reference
 Code snippets in Jupyter
 
-## Simple_GP
-- GP Code for solving the symbolic regresson problem
-- GP Code for solving the parity problem
-- GP Code for solving the pole balancing problem
-  - (regression version)
+## 01_Simple_GP
+- `GP_HowTo.ipynb`: How to use the DEAP library for Simple GP
+- `Simple_GP.py`: Full GP for simple problems:
+  - Symbolic Regression
+  - Fibonacci (using Symbolic Regression)
+  - Binary Parity
 
-## NEAT, Hyperneat
-- NEAT example for solving the pole balancing problem
-- NEAT/Hyperneat example for solving the robot design problem
+## 02_PoleBalancing -- Simple GP for OpenAI Gym
+- `PoleBalance_GP.py`: Evolve Simple GP for CartPole-v1
+- `PoleBalance_GPView.py`: View one solution
+- `MountainCar_GP.py`: Evolve Simple GP controller for MountainCar-v1
+- `MountainCar_GPView.py`: View one solution
+
+## 03_Neat -- neat-python examples
+For now this directory is the same as the example folder of neat-python repository. Use the following in class:
+
+- `single-pole-balancing`: Single pole balancing, self-simulator version.
+- `single-pole-balancing-openai`: SPB, using the OpenAI simulator
+- `picture2d`: Simple version of picture evolution using CPPNs
+
+## 04_SoftRobots -- TODO
 
 ## DEAP Examples
-Examples from Deap repository
+Examples from DEAP repository -- Will remove later

@@ -1,5 +1,5 @@
 class: center, middle
-# Introduction to Genetic Programming
+# Quick Overview of Genetic Programming
 Claus Aranha, 2022-11-15
 
 ![:scale 50%](img/GP_tree_big.png)
@@ -86,19 +86,9 @@ creating computer code.
 .cols[
 .c50[
 **General Evolutionary Computation Algorithm:**
-.boxyellow[
-.boxlabel[General EC Algorithm]
 
-1) Generate a random set of solutions;
+.center[![](img/Basic_EC.png)]
 
-2) Evaluate the Fitness of those solutions;
-
-3) Select the Solutions with highest Fitness;
-
-4) Generate a new set of solutions, by mutation and crossover of the solutions selected in (3);
-
-5) Return to (2)
-]
 ]
 .c50[
 Evolutionary Computation methods follow the algorithm to the left.
@@ -113,13 +103,15 @@ To implement an EC, it is necessary to define:
 ]
 ]
 
+<!-- TODO: Write a bit more about why EC is used a lot. -->
+
 ---
 # 1. What is Genetic Programming?
-## EC for creating Programs
+## Evolutionary Computation for creating Programs
 
 > **Genetic Programming** is an Evolutionary Computation Method that is used to generate computer programs.
 
-### Questions in Genetic Programming:
+### Three Key Questions in Genetic Programming:
 
 1. How to represent a program as a genome:  
 .redtext[The choice of data structure is important. Can we create valid random programs in this data structure? Is the data structure flexible? How to represent loops/conditionals/subroutines?]
@@ -132,10 +124,10 @@ To implement an EC, it is necessary to define:
 
 ---
 # 1. What is Genetic Programming?
-## Simple GP
+## Introduction of the "Simple GP"
 
-The "traditional" GP (Simple GP) represents programs as a .redtext[Tree], where
-the **leaf nodes are the input** and the **root node is the output**.
+The "traditional" GP (Simple GP) .redtext[represents programs as a **Tree Graph**].  
+In this graph, the **leaf nodes are the input** and the **root node is the output**.
 
 .cols[
 .c70[
@@ -163,30 +155,149 @@ or, equivalently:
 
 ---
 # 1. What is Genetic Programming?
-## Creating the Simple GP Tree
+## Terminals and Operators in Simple GP
 
-To create the Simple GP tree, we need to define the **Operators** and the **Terminals**.
+To create the Simple GP tree, first we need to define the **Terminals**
+and the **Operators**.
 
 
-- Arity
-- Inputs
-- Constants
+### Terminals:
+Terminals include the inputs of the program, as well as fixed value constants.
+
+![](img/terminal_constant.png) ![](img/terminal_input.png)
+
+### Operators:
+Operators have an **arity**, which is the number of inputs that they require.
+
+![](img/operator_1.png) ![](img/operator_2.png) ![](img/operator_3.png)
+
+---
+# 1. What is Genetic Programming?
+## The choice of operators and terminals is important!
+
+This choice depends on the problem you are trying to solve, but it also affects your **search space**.
+
+- If the number of operators is very small, then maybe it is not possible for
+the GP to create the program that you need.
+
+- If the number of operators is very large, then maybe it takes too much time for
+the GP to find the correct program. (Because there are too many options)
+
+Because of this, it is very important to consider the operators carefully.
 
 ---
 # 1. What is Genetic Programming
-## Evolutionary Loop:
-- Generate the Initial Population
-- Evaluate the Population
-- Select by Fitness
-- Crossover and Mutation
-- Repeat
+## The Evolutionary Loop in Simple GP
+
+After we defined the operators and terminals, the evolutionary loop in GP is very similar to the evolutionary loop in other algorithms, like Genetic Algorithms (GA).
+
+.cols[
+.c50[
+### 1. Generate the Initial Population
+
+There are two common options:
+
+- **Random tree**: Each node is selected with equal probability from terminals and operators.
+
+- **Full tree**: Nodes are selected from operators until a target tree size is reached, and after that, nodes are selected from terminals.
+
+]
+.c50[
+.center[![](img/Basic_EC_1.png)]
+]
+]
 
 ---
 # 1. What is Genetic Programming
-## Summary of Simple GP:
-- We want to create tree
+## The Evolutionary Loop in Simple GP
 
-Any questions so far?
+After we defined the operators and terminals, the evolutionary loop in GP is very similar to the evolutionary loop in other algorithms, like Genetic Algorithms (GA).
+
+.cols[
+.c50[
+### 2. Evaluate the population
+
+To evaluate the population, you execute each GP program tree on a set of inputs.
+
+Calculate the fitness as the difference between the output of the GP and the expected output.
+
+Make sure you have enough input/output pairs to evaluate the correctness of your GP.
+]
+.c50[
+.center[![](img/Basic_EC_2.png)]
+]
+]
+
+---
+# 1. What is Genetic Programming
+## The Evolutionary Loop in Simple GP
+
+After we defined the operators and terminals, the evolutionary loop in GP is very similar to the evolutionary loop in other algorithms, like Genetic Algorithms (GA).
+
+.cols[
+.c50[
+### 3. Select Best Individuals
+
+To select the best individuals for the next population set, we use traditional methods from the EC literature:
+
+- **k-Tournament**: *k* individuals are selected at random from the population, and the best one is kept.
+
+- **Roulette Wheel**: Select an individual from the entire population, weighted by fitness value.
+
+]
+.c50[
+.center[![](img/Basic_EC_3.png)]
+]
+]
+
+---
+# 1. What is Genetic Programming
+## The Evolutionary Loop in Simple GP
+
+After we defined the operators and terminals, the evolutionary loop in GP is very similar to the evolutionary loop in other algorithms, like Genetic Algorithms (GA).
+
+.cols[
+.c50[
+### 4. Create a new population
+
+Use crossover and mutation to create a new population:
+
+**Crossover**: Exchange a subtree between two individuals.
+
+**Mutation**: Delete a subtree and replace it with a random tree.
+
+]
+.c50[
+.center[![](img/Basic_EC_4.png)]
+]
+]
+
+---
+# 1. What is Genetic Programming
+## Crossover in GP
+
+.center[
+![:scale 35%](img/GP_Crossover.png)
+]
+
+---
+# 1. What is Genetic Programming (Summary)
+
+- Simple GP is a technique to create programs using Evolutionary Computation
+
+- The hard part about GP is **how to represent a program**
+
+  - Tree Structure
+
+  - Choice of **Operators** and **Terminals**
+
+- The Genetic Loop of GP is similar to the Genetic Loop of GA / EC / Etc.
+
+  - Mutation and crossover are specialized.
+
+  - Fitness Evaluation must use Input/Output pairs
+
+### Next I will show the implementation of GP -- Any questions so far?
 
 ---
 # 2. Implementation of Simple GP
@@ -194,14 +305,20 @@ Any questions so far?
 
 In this section, I will show how to program a Simple GP.
 
-You can follow the code here:
+You can follow the code here:  
 https://github.com/caranha/GP-short-tutorial
 
 ![:scale 30%](img/repository.png)
 
 ---
 # 2. Implementation of Simple GP
-## The DEAP Library
+## DEAP - Distributed Evolutionary Algorihtms in Python
+
+We use the [DEAP](https://deap.readthedocs.io/en/master/) Library to program simple GP in python.
+
+![:scale 40%](img/Deap_Logo.png)
+
+Make sure to install the requirements listed in the `code/outline.md`.
 
 ---
 # 2. Implementation of Simple GP
@@ -223,6 +340,7 @@ https://github.com/caranha/GP-short-tutorial
 # 2. Implementation of Simple GP
 ## Binary Parity Example
 
+---
 # 2. Implementation of Simple GP
 ## Bloat
 
