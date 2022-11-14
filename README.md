@@ -31,20 +31,17 @@ Artificial Intelligence" at the University of Tsukuba.
 
 
 # TODO
-- Code for running NEAT
-  - AIGym -- OK
+## Lecture Notes:
+- Finish First version of the Slides
+- Add a reference to GP Handbook
+- Prepare a script
+- Rework slides based on script
 
-- Lecture Materials
-  - Work on Outline a bit more
-  - Prepare Slide outline
-  - Add code/image to slides
-
-- Improve code
-  - Put all DEAP code in the same directory?
-    - Output tree with .txt, output image with correct name
-  - Make a module for operators/terminal sets in DEAP code
-  - Make parameters explicit in DEAP code
-  - Break AIGym code's evolution loop in DEAP code
-  - Make Run images for DEAP code
-
-- Code for running Softbots
+## Code Improvement
+- Add softbot code from Fabio
+- Merge directories 01 and 02
+- 01_SimpleGP: create a .txt file with the best tree found
+- 01_SimpleGP: Create a module for operator/terminal set selection
+- 01_SimpleGP: Break evolution loop in the DEAP/AIGym example
+- 01_SimpleGP: Make Evolutionary Run Dynamics images (check NEAT for how)
+- Remove `Deap_Examples`

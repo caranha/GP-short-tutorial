@@ -111,11 +111,13 @@ creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
 
 # DEAP toolbox:
 ## Change this for the problem you want to solve
-fitness_func = eval_symbreg
-operator_set = operators_symbreg()
 
-fitness_func = eval_parity
-operator_set = operators_logical()
+fitness_func = eval_symbreg
+# fitness_func = eval_fibonacci
+# fitness_func = eval_parity
+
+operator_set = operators_symbreg()
+# operator_set = operators_logical()
 
 toolbox = base.Toolbox()
 toolbox.register("expr", gp.genHalfAndHalf, pset=operator_set, min_=1, max_=2)
@@ -139,8 +141,9 @@ toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max
 # Running the GP
 def run_GP():
     POP_SIZE = 300
-    GEN_SIZE = 80
-
+    GEN_SIZE = 40
+    CROSSOVER_RATE = 0.5
+    MUTATION_RATE = 0.1
 
     init_pop = toolbox.population(n=POP_SIZE)
     hof = tools.HallOfFame(1)
@@ -155,7 +158,9 @@ def run_GP():
     mstats.register("max", numpy.max)
 
     # Perform the evolution all at once
-    end_pop, log = algorithms.eaSimple(init_pop, toolbox, 0.5, 0.1,
+    end_pop, log = algorithms.eaSimple(init_pop, toolbox,
+                                       CROSSOVER_RATE,
+                                       MUTATION_RATE,
                                        GEN_SIZE, stats=mstats,
                                        halloffame=hof, verbose=True)
 

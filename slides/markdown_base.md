@@ -27,36 +27,63 @@ Finally, we will see a example of contemporary research using GP.
 
 ---
 # 1. What is Genetic Programming?
-## Evolutionary Computation
+## Mini Intro to Evolutionary Computation
+
+Evolutionary Computation (EC) is the idea of **using the mechanism of
+Natural Evolution to create computational systems.**
+
+In nature, living creatures adapt to their environment through **natural
+selection**, **genetic inheritance**, and **mutation**. These mechanisms
+resulted in the large diversity of living beings that we have today.
+
+Could we use a similar idea to create interesting and powerful computer programs?
+
+
 
 .boxyellow[
-.boxlabel[Evolutionary Computation]
+.boxlabel[Many Techniques based in Evolutionary Computation have been developed since 1980s]
 
-Evolutionary Computation (EC) is a family of techniques inspired by the natural process of evolution. The first EC techniques were developed around 1980.
-]
-
-Traditional Algorithms in the EC family include:
+.cols[
+.c50[
 - Genetic Algorithms (GA)
 - Evolution Strategies (ES)
+
+]
+.c50[
 - Differencial Evolution (DE)
 - Genetic Programming (GP)
+]
+]
+]
+---
+# 1. What is Genetic Programming?
+## When do we want to use Evolutionary Computation?
+
+EC Methods have found to be useful for solving real problems with the following characteristics:
+
+- It is difficult to calculate a solution, but it is easy to evaluate a solution.  
+(NP-hard problems)
+
+- The solution space is discontinuous, and/or very high dimensional.
+
+- We are interested in creative and unusual solutions.
+
+.boxyellow[
+.boxlabel[Creating Programs with Evolutionary Computation]
+
+Creating computer programs has all these characteristics: It is hard to create
+a program, but it is easier to test an existing program. The task is
+symbolic / discontinuous, and usually requires a lot of human creativity.
+
+Because of this, there is a lot of interest in using Evolutionary Computation for
+creating computer code.
+]
 
 ---
 # 1. What is Genetic Programming?
 ## Outline of an EC Method
 
 .cols[
-.c50[
-Evolutionary Computation methods follow the algorithm to the right.
-
-To implement an EC, it is necessary to define:
-- How to generate a random solution (Encoding)
-
-- How to evaluate a solution (Fitness)
-
-- How to generate new solutions (mutation/crossover)
-
-]
 .c50[
 **General Evolutionary Computation Algorithm:**
 .boxyellow[
@@ -73,23 +100,18 @@ To implement an EC, it is necessary to define:
 5) Return to (2)
 ]
 ]
+.c50[
+Evolutionary Computation methods follow the algorithm to the left.
+
+To implement an EC, it is necessary to define:
+- How to generate a random solution (Encoding)
+
+- How to evaluate a solution (Fitness)
+
+- How to generate new solutions (mutation/crossover)
+
 ]
-
----
-# 1. What is Genetic Programming?
-## When are EC Useful?
-
-EC Methods have found to be useful for solving real problems with the following characteristics:
-
-- It is difficult to calculate a solution, but it is easy to evaluate a solution.  
-(NP-hard problems)
-
-- The solution space is discontinuous, and/or very high dimensional.
-
-- We are interested in creative and unusual solutions.
-
-.redtext[Creating Programs has all the characteristics above].  
-Because of this, many people have studied **Genetic Programming** in the last 30 years.
+]
 
 ---
 # 1. What is Genetic Programming?
@@ -97,51 +119,85 @@ Because of this, many people have studied **Genetic Programming** in the last 30
 
 > **Genetic Programming** is an Evolutionary Computation Method that is used to generate computer programs.
 
-### Difficulties in Genetic Programming
+### Questions in Genetic Programming:
 
-- How to generate a random solution (Encoding): .redtext[How do we represent a program?]
+1. How to represent a program as a genome:  
+.redtext[The choice of data structure is important. Can we create valid random programs in this data structure? Is the data structure flexible? How to represent loops/conditionals/subroutines?]
 
-- How to evaluate a solution (Fitness): .redtext[This one is relatively easy]
+2. How to mutate/crossover a program:  
+.redtext[How to deal with programs of different lengths. Will mutation/crossover break a program? Can we extract "functions" for mutation/crossover?]
 
-- How to generate new solutions (mutation/crossover) .redtext[How do we "mutate" programs?]
+3. How to evaluate a program:  
+.redtext[Comparison of input/output. However, multiple, possibly infinite, input/output pairs. Stochastic input/output pairs]
 
 ---
 # 1. What is Genetic Programming?
 ## Simple GP
 
-The "traditional" GP (Simple GP) uses a .redtext[Tree Representation] of
-programs.
+The "traditional" GP (Simple GP) represents programs as a .redtext[Tree], where
+the **leaf nodes are the input** and the **root node is the output**.
 
-This represents a computer program as a tree structure, with the inputs as
-the leaf nodes, and the output as the root note.
+.cols[
+.c70[
+The tree to the right is equivalent to the following program:
 
-For example, the tree below represents the program XXXXX
+`mul(neg(add(mul(X, mul(X, X)), X)), sub(-1, X))`
 
-TODO
+Which we can simplify as:
+
+`y = (-1 * (X + X^3)) * (-1 - X)`
+
+or, equivalently:
+
+`y = X + X^2 + X^3 + X^4 `
+
+**Note that any subtree is a valid GP tree!**
+
+]
+.c30[
+![:scale 80%](img/symbreg_tree1.png)
+
+
+]
+]
 
 ---
 # 1. What is Genetic Programming?
-## Simple GP Operators
+## Creating the Simple GP Tree
+
+To create the Simple GP tree, we need to define the **Operators** and the **Terminals**.
+
+
 - Arity
 - Inputs
 - Constants
 
 ---
 # 1. What is Genetic Programming
-## Crossover and Mutation
+## Evolutionary Loop:
+- Generate the Initial Population
+- Evaluate the Population
+- Select by Fitness
+- Crossover and Mutation
+- Repeat
 
 ---
 # 1. What is Genetic Programming
+## Summary of Simple GP:
+- We want to create tree
+
+Any questions so far?
 
 ---
 # 2. Implementation of Simple GP
 ## Let's get Coding!
 
-TODO:
+In this section, I will show how to program a Simple GP.
 
-We will create a code for simple GP to solve a regression problem.
+You can follow the code here:
+https://github.com/caranha/GP-short-tutorial
 
-You can download the code here:
+![:scale 30%](img/repository.png)
 
 ---
 # 2. Implementation of Simple GP
