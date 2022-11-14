@@ -76,7 +76,8 @@ def GP_from_string(string):
 
 if __name__ == "__main__":
     # TODO: Load from commandline parameter
-    best0 = "neg(add(IN3, sin(IN2)))"
+    # best0 = "neg(add(IN3, sin(IN2)))"
+    best0 = "neg(add(IN3, IN2))"
     tree0 = GP_from_string(best0)
 
 
