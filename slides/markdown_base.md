@@ -22,7 +22,7 @@ Finally, we will see a example of contemporary research using GP.
 - Implementation of Simple GP
 - Simple GP and the Pole Balancing Problem
 - GP for Neural Networks (NEAT)
-- Robot Morphology using Neuro Evolution
+- GP for Morphology
 
 ---
 # 1. What is Genetic Programming?
@@ -527,26 +527,162 @@ Let's run these programs and see the results.
 # 4. GP for Neural Networks
 ## Can we use GP for Neural Networks?
 
----
-# 4. GP for Neural Networks
-## Neuro Evolution of Augmenting Topologies
+Simple GPs are represented as a tree graph. Neural networks are also (usually) represented as a tree graph. So, it is natural to ask, **Can we use GP to create Neural Networks?**.
+
+Using GP to create neural networks would solve many problems about how to design their topology, so it is a very interesting question.
+
+However, there are some issues that need to be addressed:
+
+- **What are the appropriate operators and terminals for a GP-NN?**
+
+- **How to select the weights of a GP-NN?**  
+  (This is an important, and hard, issue. Do we improve the weights using the evolutionary process, or separately?)
 
 ---
 # 4. GP for Neural Networks
-## Summary of the NEAT Paper
+## Neuro Evolution of Augmenting Topologies (NEAT)
+
+NEAT ([Original Paper](https://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf)) is an algorithm originally proposed in 2003 to generate Neural Networks using Genetic Programming.
+
+Today NEAT (and its variants, like HyperNEAT, CPPN, and others) is the
+de-facto standard for what is called .redtext["Neuroevolution"] --
+The evolution of artificial neural networks.
+
+Let's see how NEAT works.
 
 ---
 # 4. GP for Neural Networks
-## NEAT for Pole Balancing
+## NEAT Program Encoding
 
+.cols[
+.c50[
+![:scale 90%](img/NEAT_genotype.png)
+]
+.c50[
+Neat Defines a GP tree as a .redtext[directed graph]. Each neuron is represented as a node on a graph, and connections are represented as edges.
+
+Each node has an associated **activation function**. Users define the set of possible activation functions in the same way that GP defines the set of operators.
+
+NEAT focuses on the **edges** of the neural network. Each edge that is created is associated with a **unique number ID** (*innovation number*), which is used for crossover and mutation later.
+
+Edges also have weight values, and a flag indicating whether they are enabled or disabled.
+]
+]
 
 ---
 # 4. GP for Neural Networks
-## CPPN and Image Generation
+## NEAT Mutation
+
+.cols[
+.c50[
+![:scale 90%](img/NEAT_mutation.png)
+]
+.c50[
+Mutation in NEAT is relatively straightforward. There are two types of mutation:
+
+- **Edge Mutation**: A new edge is created between two existing nodes. The global *innovation number* is incremented.
+
+- **Node Mutation**: A new node is inserted between two existing nodes. The edge between them is disabled (not deleted), and two new edges are created.
+]
+]
+
+---
+# 4. GP for Neural Networks
+## NEAT Crossover
+
+.cols[
+.c60[
+Different from GP, .redtext[a subgraph of a Neural Network is not a complete neural network], so it is not possible to use the traditional GP crossover operators.
+
+**NEAT solves this problem using the Innovation Numbers**.
+
+The edges of two neural network are aligned by their innovation numbers. After that, the crossover is similar to the Genetic Algorithm crossover.
+
+]
+.c40[
+![:scale 90%](img/NEAT_crossover.png)
+]
+]
+
+---
+# 4. GP for Neural Networks
+## NEAT -- Other characteristics
+
+A few other interesting characteristics of the NEAT algorithm:
+
+- **Genetic Species**:  
+NEAT calculates the species of a Neural Network, based its lineage relationships and the distance between two networks.
+
+This information is used during the **selection** process, to maintain the **diversity** of the population.
+
+`Diversity is the amount of variety existing in the population of an Evolutionary computation. In general high diversity improves the performance of the algorithm.`
+
+- **Start with Empty Networks**:  
+The initial population of a NEAT algorithm contains only empty networks. These networks have only input and output neurons (no hidden neurons), and few connections.
+
+It is believed that this improves the speed of the algorithm, and help reduce bloat.
+
+---
+# 4. GP for Neural Networks
+## Code Example 1: NEAT for Pole Balancing
+
+We can re-do the OpenAI Gym Pole Balancing exercise using Neat by executing the following two files:
+
+Evolve a solution for the problem:
+- `03_Neat/single-pole-balancing-openai/evolve-feedforward.py`
+
+Observe the best solution:
+- `03_Neat/single-pole-balancing-openai/test-feedforward.py`
+
+This program is more advanced, including things such as:
+- parallelization,
+- graph of fitness over time,
+- saving the best individual to a file,
+- graph of species, etc.
+
+Make sure to look at the details later!
+
+---
+# 4. GP for Neural Networks
+## (Extra) The Bibites
+
+To finish this section, I want to introduce a fun project that uses NEAT: [The Bibites](https://leocaussan.itch.io/the-bibites)
+
+.center[
+![:scale 50%](img/bibites.png)
+]
+
+In this project, artificial creatures are evolved in a simulated world. Their brains are controlled by the NEAT algorithm.
+
+In the beginning, these creatures can only move foward. But after some time, they learn to search for food, save energy, and hunt (or flee) from other creatures.
+
+## Take a look later! Any questions about NEAT?
+
+---
+# 5. GP and Morphology
+
+Just like the genome is the program that generate our bodies,
+is it possible for a GP program to *create* new things?
+
+In this last part, we will look at some research and code about GP being
+for creating structures (morphology)
+
+---
+# 5. GP and Morphology
+## NEAT-CPPN for image generation.
+
+2D image generation example.
+
+---
+# 5. GP for Morphology
+## Image Generation and
+
+CPPN and Image Generation
 
 
 ---
-# 5. Robot Morphology using Neuro Evolution
+# 5. GP for Morphology
+##
 
 Fabio Presentation
 
