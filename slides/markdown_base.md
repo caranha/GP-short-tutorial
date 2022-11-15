@@ -661,35 +661,104 @@ In the beginning, these creatures can only move foward. But after some time, the
 ---
 # 5. GP and Morphology
 
-Just like the genome is the program that generate our bodies,
-is it possible for a GP program to *create* new things?
+.cols[
+.c70[
+In our body, the genome is the **program that creates our shape**.
 
-In this last part, we will look at some research and code about GP being
-for creating structures (morphology)
+Whether we are tall or short, dark or light skinned, with 5 or 6 fingers,
+the data contained in our DNA will define how our body is built.
+
+In a similar way, is it possible to create a GP that defines how a robot
+is built?
+
+Using GP, we could generate robots in shapes that are specialized for
+a variety of tasks.
+
+This line of research is called .redtext[Evolvable Morphology].
+
+Let's see two examples.
+]
+.c30[
+![:scale 100%](img/Vitruvian_robot.jpg)  
+Futturnauta, CC BY-SA 4.0, via Wikimedia Commons
+]
+]
 
 ---
 # 5. GP and Morphology
 ## NEAT-CPPN for image generation.
 
-2D image generation example.
+.center[
+![:scale 40%](img/picbreeder.png)
+]
+
+The file `code/03_Neat/picture2d/evolve_interactive.py` has a program that uses neat to generate images based on interaction with the user.
 
 ---
 # 5. GP for Morphology
-## Image Generation and
+## How can we generate images using NEAT-CPPN?
 
-CPPN and Image Generation
+.cols[
+.c70[
+Compositional Pattern Producing Networks (CPPNs) are a kind of Neural Network that can be generated using NEAT.
 
+The characteristics of these networks is that they take an `x,y` position as input, and return the value of that position as the output.
+
+This means that we can use a CPPN as a .redtext["printer head"]. For example, if we activate the CPPN at each pixel of an image, the network will tell us what is the color of the pixel that should be written in that position.
+
+On the other hand, this also means that **One CPPN can only create one Image**. This is similar to how DNA works too.
+]
+.c30[
+.center[
+![:scale 80%](img/CPPN_network.png)
+]
+]
+]
+---
+# 5. GP for Morphology
+## NEAT-CPPN for Soft Robot Morphology
+
+We can use the same technology to evolve the morphology of soft robots, like in the simulations below.  
+(There are also 3D versions of this project in other groups)
+
+.cols[
+.c50[
+.center[
+![:scale 60%](img/fabio_softbots_01.gif)
+
+![:scale 60%](img/fabio_softbots_08.gif)
+]
+]
+.c50[
+.center[
+![:scale 60%](img/fabio_softbots_05.gif)
+
+![:scale 60%](img/fabio_softbots_07.gif)
+]
+]
+]
 
 ---
 # 5. GP for Morphology
-##
 
-Fabio Presentation
+There are still a lot of work to be done in this area of research.
+
+If you are interested in this theme, let's work together!
 
 ---
 # 6. Summary
+
 - Things we learned:
+  - GP can be used to create computer programs from evolutionary principles;
+  - The selection of data structure and operator are key choices when using GP;
+  - You can easily implement GP using the **DEAP** and **NEAT** libraries;
+  - NEAT can be used to generate neural networks using GP;
+  - We can use GP for robotic control, as well as morphology generation;
+
 - Things you should try to do:
+  - Check the code in the repository and run the examples found today.
+  - Modify the parameters and operators to try and improve the results of `fibonacci` and `mountain car`
+  - Use GP to solve problems that you are interested in!
 
 ---
 # A. References
@@ -699,3 +768,8 @@ Fabio Presentation
 - [NEAT Library](https://neat-python.readthedocs.io/en/latest/neat_overview.html)
 - [NEAT Paper](http://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf)
 - [Soft Robot Morphology Code](https://github.com/fhtanaka/SGR)
+
+---
+# B. Future TODO:
+- Expand on the Morphology module with code for soft robots
+- Add a module on PushGP
