@@ -67,7 +67,7 @@ def GP_from_string(string):
 
 if __name__ == "__main__":
     # TODO: Load from commandline parameter
-    best0 = "add(sub(IN1, IN0), IN1)"
+    best0 = "mul(1,1)"
     tree0 = GP_from_string(best0)
 
 

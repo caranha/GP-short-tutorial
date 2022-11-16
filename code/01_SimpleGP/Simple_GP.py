@@ -152,7 +152,7 @@ toolbox.decorate("mutate",
 # Running the GP
 def run_GP():
     POP_SIZE = 300
-    GEN_SIZE = 40 # 120
+    GEN_SIZE = 80
     CROSSOVER_RATE = 0.5
     MUTATION_RATE = 0.1
 
@@ -182,9 +182,9 @@ def run_GP():
     drawtree(hof[0], "besttree.png")
 
     # Fibonacci analysis:
-    # hof_func = gp.compile(hof[0], operator_set)
-    # for i in range(10):
-    #     print("{}, {}".format(fibonacci(i), hof_func(i)))
+    hof_func = gp.compile(hof[0], operator_set)
+    for i in range(10):
+        print("{}, {}".format(fibonacci(i), hof_func(i)))
 
 
     # TODO: Analyze the first generation and last generation separately

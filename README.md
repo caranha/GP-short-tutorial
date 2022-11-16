@@ -1,6 +1,6 @@
 # Short Talk: Introduction to Genetic Programming
 
-This talk is a short (~ 1:00 hour), code-focused introduction to Genetic
+This talk is a short (2 modules of 1 hour each), code-focused introduction to Genetic
 Programming (GP). The intended audience are students in a Computer
 Science-like program that have some coding experience, and some general
 awareness of Artificial Intelligence and Evolutionary Computation.
@@ -32,6 +32,9 @@ Artificial Intelligence" at the University of Tsukuba.
 
 # TODO
 ## Lecture Notes:
+- Break the lecture in two parts:
+  - Part 1: Until NEAT (GP Basics)
+  - Part 2: From NEAT on (Modern GP?)
 - Extend section on Fabio's work
 - Add section on PushGP
 - Add reference to GP Handbook
